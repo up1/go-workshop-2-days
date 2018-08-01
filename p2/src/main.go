@@ -29,12 +29,11 @@ func CreatePatient(w http.ResponseWriter, r *http.Request) {
 		username := r.FormValue("patient_username")
 		lastname := r.FormValue("patient_lastname")
 		age := r.FormValue("patient_age")
-		fmt.Fprintf(w, username+lastname+age)
-		insForm, err := db.Prepare("INSERT INTO patient(patient_username, patient_lastname,patient_age) VALUES(?,?,?)")
+		insertForm, err := db.Prepare("INSERT INTO patient(patient_username, patient_lastname,patient_age) VALUES(?,?,?)")
 		if err != nil {
 			panic(err.Error())
 		}
-		insForm.Exec(username, lastname, age)
+		insertForm.Exec(username, lastname, age)
 		log.Println("INSERT: Name: " + username + " | Lastname: " + lastname + " | Age: " + age)
 	}
 	defer db.Close()
