@@ -2,8 +2,8 @@ package router
 
 import (
 	"encoding/json"
-	"model"
 	"net/http"
+	"patient/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/echo"
@@ -17,6 +17,7 @@ func SetupRouteStandardLibrary() *http.ServeMux {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
 		patientResponse := model.NewPatientResponse{
+			PatientID: "2018-0001",
 			FirstName: patientRequest.FirstName,
 			LastName:  patientRequest.LastName,
 			Age:       patientRequest.Age,
@@ -34,6 +35,7 @@ func SetupRouteEcho() *echo.Echo {
 			return err
 		}
 		patientResponse := model.NewPatientResponse{
+			PatientID: "2018-0001",
 			FirstName: patientRequest.FirstName,
 			LastName:  patientRequest.LastName,
 			Age:       patientRequest.Age,
@@ -51,6 +53,7 @@ func SetupRouteGin() *gin.Engine {
 			context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		}
 		patientResponse := model.NewPatientResponse{
+			PatientID: "2018-0001",
 			FirstName: patientRequest.FirstName,
 			LastName:  patientRequest.LastName,
 			Age:       patientRequest.Age,

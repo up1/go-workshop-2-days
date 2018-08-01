@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//PatientResquest keep infomation
+//PatientRequest keep infomation
 type PatientRequest struct {
 	Name     string `json:"name"`
 	Lastname string `json:"lastname"`
@@ -21,15 +21,14 @@ type PatientResponse struct {
 
 // CreateNewPatient response Patient infomations
 func CreateNewPatient(c *gin.Context) {
-
 	var patientRequest PatientRequest
 	c.ShouldBind(&patientRequest)
-	patientResp := PatientResponse{
+	patientResponse := PatientResponse{
 		PatientID: "2018-0001",
 		Name:      patientRequest.Name,
 		Lastname:  patientRequest.Lastname,
 		Age:       patientRequest.Age,
 	}
-	c.JSON(201, patientResp)
+	c.JSON(201, patientResponse)
 
 }

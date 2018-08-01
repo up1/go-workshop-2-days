@@ -1,7 +1,7 @@
 package service
 
 import (
-	"model"
+	"patient/model"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
