@@ -33,29 +33,35 @@ func main() {
 	}
 
 	http.HandleFunc("/v1/patients", func(writer http.ResponseWriter, request *http.Request) {
-		var patient, newPatient Patient
+		var patient Patient
 		err := json.NewDecoder(request.Body).Decode(&patient)
 		if err != nil {
 			http.Error(writer, "Not Found", http.StatusNotFound)
 			return
 		}
-		patient.PatientID, _ = GeneratePatientID(DBSession)
-		err = DBSession.DB("hospital_somkiat").C("patients").Insert(patient)
+		newPatient, err := InsertPatient(DBSession, patient)
 		if err != nil {
 			http.Error(writer, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		err = DBSession.DB("hospital_somkiat").C("patients").Find(bson.M{"patientID": patient.PatientID}).One(&newPatient)
-		if err != nil {
-			http.Error(writer, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		UpdatePatientCount(DBSession)
+
 		json.NewEncoder(writer).Encode(newPatient)
 	})
 
 	http.ListenAndServe(":3000", nil)
 
+}
+
+func InsertPatient(session *mgo.Session, patient Patient) (Patient, error) {
+	var newPatient Patient
+	patient.PatientID, _ = GeneratePatientID(session)
+	err := session.DB("hospital_somkiat").C("patients").Insert(patient)
+	if err != nil {
+		return patient, err
+	}
+	UpdatePatientCount(session)
+	err = session.DB("hospital_somkiat").C("patients").Find(bson.M{"patientID": patient.PatientID}).One(&newPatient)
+	return newPatient, err
 }
 
 func GeneratePatientID(session *mgo.Session) (string, error) {
@@ -68,6 +74,7 @@ func GeneratePatientID(session *mgo.Session) (string, error) {
 	patientCount.Count++
 	return FormatPatientID(time.Now().Year(), patientCount.Count), nil
 }
+
 func UpdatePatientCount(session *mgo.Session) {
 	var patientCount PatientCount
 	session.DB("hospital_somkiat").C("patientsCount").Find(nil).One(&patientCount)
