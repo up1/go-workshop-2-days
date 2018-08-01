@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -15,16 +16,15 @@ type Member struct {
 	ID    string `json"id"`
 	Fname string `json"fmane"`
 	Lname string `json"lname"`
-	Age   string `json"age"`
+	Age   int    `json"age"`
 }
 
 func (a *API) AddMember(writer http.ResponseWriter, request *http.Request) {
 	member := Member{}
-	if request.Method == "POST" {
-		member.ID = request.FormValue("id")
-		member.Fname = request.FormValue("fname")
-		member.Lname = request.FormValue("lname")
-		member.Age = request.FormValue("age")
+	err := json.NewDecoder(request.Body).Decode(&member)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	fmt.Println(member)
 	insertStatement, err := a.ConnectDB.Prepare("INSERT INTO member(id,fname,lname,age) VALUES( ?, ?, ?, ? )")
