@@ -1,7 +1,7 @@
 package service_test
 
 import (
-	. "service"
+	. "patient/service"
 	"testing"
 )
 

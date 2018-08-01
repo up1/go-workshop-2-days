@@ -1,7 +1,7 @@
 package main
 
 import (
-	"router"
+	"clinic/router"
 
 	"github.com/gin-gonic/gin"
 )

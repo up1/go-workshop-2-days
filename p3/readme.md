@@ -26,3 +26,14 @@ server.Run(":3000")
 mux := router.SetupRouteStandardLibrary()
 http.ListenAndServe(":3000", mux)
 ```
+
+#GO STEP
+```
+go get ....
+gofmt -w src
+go clean -testcache
+go test -v -cover -coverprofile=coverage.out ./...
+go tool cover -html=coverage.out
+go install patient // go build -o ./bin/patient patient
+./bin/patient
+```
