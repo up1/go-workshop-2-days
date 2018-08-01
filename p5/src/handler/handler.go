@@ -4,12 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Patient keep infomation
 type Patient struct {
 	Name     string `json:"name"`
 	Lastname string `json:"lastname"`
 	Age      string `json:"age"`
 }
 
+// CreateNewPatient response Patient infomations
 func CreateNewPatient(c *gin.Context) {
 
 	var patient Patient
