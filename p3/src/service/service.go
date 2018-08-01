@@ -9,10 +9,18 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+type IPatientService interface {
+	InsertPatient(patient model.Patient) (model.Patient, error)
+}
 type PatientService struct {
 	DBSession *mgo.Session
 }
 
+func NewPatientService(session *mgo.Session) PatientService {
+	return PatientService{
+		DBSession: session,
+	}
+}
 func (service PatientService) InsertPatient(patient model.Patient) (model.Patient, error) {
 	var newPatient model.Patient
 	patient.PatientID, _ = service.GeneratePatientID()

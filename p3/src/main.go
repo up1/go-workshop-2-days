@@ -17,8 +17,8 @@ func main() {
 		fmt.Println("Cannot connect database ", err.Error())
 		return
 	}
-	patientService := service.PatientService{DBSession: DBSession}
-	api := apiLibrary.Api{PatientService: patientService}
+	patientService := service.NewPatientService(DBSession)
+	api := apiLibrary.NewApi(&patientService)
 	http.HandleFunc("/v1/patients", api.CreatePatientHandler)
 
 	http.ListenAndServe(":3000", nil)

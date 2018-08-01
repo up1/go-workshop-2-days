@@ -8,7 +8,13 @@ import (
 )
 
 type Api struct {
-	PatientService service.PatientService
+	PatientService service.IPatientService
+}
+
+func NewApi(patientService service.IPatientService) Api {
+	return Api{
+		PatientService: patientService,
+	}
 }
 
 func (api Api) CreatePatientHandler(writer http.ResponseWriter, request *http.Request) {
