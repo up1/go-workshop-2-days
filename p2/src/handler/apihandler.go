@@ -1,9 +1,6 @@
 package handler
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +26,7 @@ type Patient struct {
 }
 
 func CreatePatient(c *gin.Context) {
-	c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No todo found!"})
-	fmt.Printf("Create new patient")
-
+	var patient Patient
+	c.BindJSON(&patient)
+	c.JSON(200, patient)
 }
