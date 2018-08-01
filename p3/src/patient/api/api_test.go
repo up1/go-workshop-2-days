@@ -1,11 +1,11 @@
 package api_test
 
 import (
-	. "api"
 	"encoding/json"
-	"model"
 	"net/http/httptest"
-	"service"
+	. "patient/api"
+	"patient/model"
+	"patient/service"
 	"strings"
 	"testing"
 	"time"
