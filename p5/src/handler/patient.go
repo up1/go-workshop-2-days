@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Patient keep infomation
+//PatientResquest keep infomation
 type PatientRequest struct {
 	Name     string `json:"name"`
 	Lastname string `json:"lastname"`
