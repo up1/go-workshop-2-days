@@ -17,6 +17,7 @@ func main() {
 		fmt.Println("Cannot connect database ", err.Error())
 		return
 	}
+	defer DBSession.Close()
 	patientService := service.NewPatientService(DBSession)
 	api := apiLibrary.NewApi(&patientService)
 	http.HandleFunc("/v1/patients", api.CreatePatientHandler)
