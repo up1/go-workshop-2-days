@@ -2,13 +2,13 @@ package model
 
 import "gopkg.in/mgo.v2/bson"
 
-type PatientRequest struct {
+type NewPatientRequest struct {
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
 	Age       int    `json:"age"`
 }
 
-type PatientResponse struct {
+type NewPatientResponse struct {
 	PatientID string `json:"patientID,omitempty"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
