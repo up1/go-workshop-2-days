@@ -7,10 +7,15 @@ import (
 )
 
 func main() {
+	router := setupRouter()
+	router.Run(":3000")
+}
+
+func setupRouter() *gin.Engine {
 	router := gin.Default()
 	v1 := router.Group("/api/v1/patient")
 	{
 		v1.POST("/", handler.CreatePatient)
 	}
-	router.Run()
+	return router
 }
