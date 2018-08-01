@@ -1,7 +1,7 @@
 package main
 
 import (
-	"member"
+	"clinic/member"
 
 	"github.com/gin-gonic/gin"
 )
