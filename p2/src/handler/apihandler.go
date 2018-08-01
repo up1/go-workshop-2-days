@@ -18,11 +18,11 @@ type Response struct {
 }
 
 type Patient struct {
-	ID        string `json: "id"`
-	PatientID string `json: "patient_id"`
-	FirstName string `json: "firstname"`
-	LastName  string `json: "lastname"`
-	Age       int    `json: "age"`
+	ID        string `json:"id"`
+	PatientID string `json:"patient_id"`
+	FirstName string `json:"firstname"`
+	LastName  string `json:"lastname"`
+	Age       int    `json:"age"`
 }
 
 func CreatePatient(c *gin.Context) {
