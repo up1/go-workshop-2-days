@@ -1,12 +1,26 @@
 package router
 
 import (
+	"encoding/json"
 	"model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/echo"
 )
+
+func SetupRouteStandardLibrary() *http.ServeMux {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/v1/patients", func(w http.ResponseWriter, r *http.Request) {
+		patientRequest := new(model.PatientRequest)
+		if err := json.NewDecoder(r.Body).Decode(patientRequest); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		var patientResponse model.PatientResponse
+		json.NewEncoder(w).Encode(patientResponse)
+	})
+	return mux
+}
 
 func SetupRouteEcho() *echo.Echo {
 	router := echo.New()
