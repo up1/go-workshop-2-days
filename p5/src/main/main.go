@@ -7,10 +7,7 @@ import (
 )
 
 func main() {
-
 	router := gin.Default()
 	router.POST("/api/v1/patients", handler.CreateNewPatient)
-
 	router.Run(":8080")
-
 }
