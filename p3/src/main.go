@@ -35,7 +35,6 @@ func main() {
 	http.HandleFunc("/v1/patients", func(writer http.ResponseWriter, request *http.Request) {
 		var patient, newPatient Patient
 		err := json.NewDecoder(request.Body).Decode(&patient)
-		fmt.Println(request.Body)
 		if err != nil {
 			http.Error(writer, "Not Found", http.StatusNotFound)
 			return
@@ -51,6 +50,7 @@ func main() {
 			http.Error(writer, err.Error(), http.StatusInternalServerError)
 			return
 		}
+		UpdatePatientCount(DBSession)
 		json.NewEncoder(writer).Encode(newPatient)
 	})
 
@@ -63,12 +63,17 @@ func GeneratePatientID(session *mgo.Session) (string, error) {
 	err := session.DB("hospital_somkiat").C("patientsCount").Find(nil).One(&patientCount)
 	if err != nil && err.Error() == "not found" {
 		patientCount.Count = 0
+		session.DB("hospital_somkiat").C("patientsCount").Insert(&patientCount)
 	}
 	patientCount.Count++
 	return FormatPatientID(time.Now().Year(), patientCount.Count), nil
 }
+func UpdatePatientCount(session *mgo.Session) {
+	var patientCount PatientCount
+	session.DB("hospital_somkiat").C("patientsCount").Find(nil).One(&patientCount)
+	session.DB("hospital_somkiat").C("patientsCount").UpdateId(patientCount.ID, bson.M{"$inc": bson.M{"count": 1}})
+}
 
 func FormatPatientID(year, number int) string {
-	fmt.Println(year, number)
-	return fmt.Sprintf("%d-%4d", year, number)
+	return fmt.Sprintf("%d-%04d", year, number)
 }
