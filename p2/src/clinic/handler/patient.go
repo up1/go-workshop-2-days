@@ -43,6 +43,6 @@ func CreatePatient(c *gin.Context) {
 		LastName:  patientRequest.LastName,
 		Age:       patientRequest.Age,
 	}
-	c.JSON(200, patient)
+	c.JSON(201, patient)
 
 }
