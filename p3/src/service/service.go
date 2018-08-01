@@ -9,6 +9,9 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+type IPatientService interface {
+	InsertPatient(patient model.Patient) (model.Patient, error)
+}
 type PatientService struct {
 	DBSession *mgo.Session
 }

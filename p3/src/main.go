@@ -18,7 +18,7 @@ func main() {
 		return
 	}
 	patientService := service.PatientService{DBSession: DBSession}
-	api := apiLibrary.Api{PatientService: patientService}
+	api := apiLibrary.Api{PatientService: &patientService}
 	http.HandleFunc("/v1/patients", api.CreatePatientHandler)
 
 	http.ListenAndServe(":3000", nil)
