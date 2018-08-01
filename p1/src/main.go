@@ -1,18 +1,14 @@
 package main
 
 import (
+	. "api"
 	"database/sql"
 	"fmt"
+	"log"
+	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 )
-
-type Member struct {
-	ID    string `json"id"`
-	Fname string `json"fmane"`
-	Lname string `json"lname"`
-	Age   string `json"Age"`
-}
 
 func main() {
 	db, err := ConnectDB()
@@ -26,6 +22,9 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
+	apiConnect := API{ConnectDB: db}
+	http.HandleFunc("/patient/add", apiConnect.AddMember)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func ConnectDB() (*sql.DB, error) {
