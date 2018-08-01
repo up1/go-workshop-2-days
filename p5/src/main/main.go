@@ -1,16 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"handler"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, you've requested: %s\n", r.URL.Path)
-	})
+	router := gin.Default()
+	router.POST("/api/v1/patients", handler.CreateNewPatient)
 
-	http.ListenAndServe(":80", nil)
+	router.Run(":8080")
 
 }

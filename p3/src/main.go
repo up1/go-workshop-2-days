@@ -1,26 +1,15 @@
 package main
 
 import (
-	apiLibrary "api"
-	"fmt"
-	"net/http"
-	"service"
-
-	mgo "gopkg.in/mgo.v2"
+	"router"
 )
 
 const url = "mongodb://localhost:27017"
 
 func main() {
-	DBSession, err := mgo.Dial(url)
-	if err != nil {
-		fmt.Println("Cannot connect database ", err.Error())
-		return
-	}
-	patientService := service.PatientService{DBSession: DBSession}
-	api := apiLibrary.Api{PatientService: patientService}
-	http.HandleFunc("/v1/patients", api.CreatePatientHandler)
+	// server := router.SetupRouteEcho()
+	// server.Start(":3000")
 
-	http.ListenAndServe(":3000", nil)
-
+	server := router.SetupRouteGin()
+	server.Run(":3000")
 }

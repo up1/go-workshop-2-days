@@ -35,17 +35,29 @@ func GetPatient(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(msg)
 }
 
-func ConnectDB() string {
+func ConnectDB() (db *sql.DB) {
 	db, err := sql.Open("mysql",
 		"root:@tcp(127.0.0.1:3306)/clinic")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	var member string
-	err = db.QueryRow("SELECT patient_id FROM patient WHERE patient_id = ?", 1995-0001).Scan(&member)
-	if err != nil {
-		log.Fatal(err)
+	return db
+}
+
+func Insert(w http.ResponseWriter, r *http.Request) {
+	db := ConnectDB()
+	if r.Method == "POST" {
+		patient_id := r.FormValue("1995-0002")
+		firstname := r.FormValue("ภาณุมาศ")
+		lastname := r.FormValue("แสนโท")
+		age := 22
+		insForm, err := db.Prepare("INSERT INTO patient(patient_id,firstname,lastname, age) VALUES(?,?,?,?)")
+		if err != nil {
+			panic(err.Error())
+		}
+		insForm.Exec(patient_id, firstname, lastname, age)
+		log.Println("INSERT: Patient_id: " + patient_id + " | name: " + firstname + lastname)
 	}
-	return member
+	defer db.Close()
 }

@@ -11,6 +11,12 @@ type Api struct {
 	PatientService service.PatientService
 }
 
+func NewApi(patientService service.PatientService) Api {
+	return Api{
+		PatientService: patientService,
+	}
+}
+
 func (api Api) CreatePatientHandler(writer http.ResponseWriter, request *http.Request) {
 	var patient model.Patient
 	err := json.NewDecoder(request.Body).Decode(&patient)
