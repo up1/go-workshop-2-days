@@ -1,32 +1,28 @@
 package main
 
 import (
-	. "api"
-	"database/sql"
-	"fmt"
-	"log"
-	"net/http"
-
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	db, err := ConnectDB()
-	if err != nil {
-		panic(err.Error())
-	} else {
-		fmt.Println("connect success")
-	}
-	defer db.Close()
-	err = db.Ping()
-	if err != nil {
-		panic(err.Error())
-	}
-	apiConnect := API{ConnectDB: db}
-	http.HandleFunc("/patient/add", apiConnect.AddMember)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	router := gin.Default()
+	router.GET("api/v1/patient", routerHandler)
+	router.Run(":8080")
 }
 
-func ConnectDB() (*sql.DB, error) {
-	return sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/patient")
+type patientResponse struct {
+	Id    string `json:"id"`
+	Fname string `json:"fname"`
+	Lname string `json:"lname"`
+	Age   int    `json:"age"`
+}
+
+func routerHandler(c *gin.Context) {
+	patient := patientResponse{
+		Id:    "2018-0001",
+		Fname: "panumars",
+		Lname: "seanto",
+		Age:   23,
+	}
+	c.JSON(201, patient)
 }
