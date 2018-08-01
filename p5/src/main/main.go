@@ -1,13 +1,16 @@
 package main
 
 import (
-	"api"
-	"net/http"
+	"handler"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	http.HandleFunc("/createnewpatient", api.PostInfomationPatientID)
-	http.ListenAndServe(":80", nil)
+	router := gin.Default()
+	router.POST("/api/v1/patients", handler.CreateNewPatient)
+
+	router.Run(":8080")
 
 }
