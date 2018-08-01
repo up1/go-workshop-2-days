@@ -12,11 +12,15 @@ import (
 func SetupRouteStandardLibrary() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/v1/patients", func(w http.ResponseWriter, r *http.Request) {
-		patientRequest := new(model.PatientRequest)
+		patientRequest := new(model.NewPatientRequest)
 		if err := json.NewDecoder(r.Body).Decode(patientRequest); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		var patientResponse model.PatientResponse
+		patientResponse := model.NewPatientResponse{
+			FirstName: patientRequest.FirstName,
+			LastName:  patientRequest.LastName,
+			Age:       patientRequest.Age,
+		}
 		json.NewEncoder(w).Encode(patientResponse)
 	})
 	return mux
@@ -25,11 +29,15 @@ func SetupRouteStandardLibrary() *http.ServeMux {
 func SetupRouteEcho() *echo.Echo {
 	router := echo.New()
 	router.POST("/api/v1/patients", func(context echo.Context) error {
-		patientRequest := new(model.PatientRequest)
+		patientRequest := new(model.NewPatientRequest)
 		if err := context.Bind(patientRequest); err != nil {
 			return err
 		}
-		var patientResponse model.PatientResponse
+		patientResponse := model.NewPatientResponse{
+			FirstName: patientRequest.FirstName,
+			LastName:  patientRequest.LastName,
+			Age:       patientRequest.Age,
+		}
 		return context.JSON(http.StatusCreated, patientResponse)
 	})
 	return router
@@ -38,11 +46,15 @@ func SetupRouteEcho() *echo.Echo {
 func SetupRouteGin() *gin.Engine {
 	router := gin.Default()
 	router.POST("/api/v1/patients", func(context *gin.Context) {
-		patientRequest := new(model.PatientRequest)
+		patientRequest := new(model.NewPatientRequest)
 		if err := context.Bind(patientRequest); err != nil {
 			context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		}
-		var patientResponse model.PatientResponse
+		patientResponse := model.NewPatientResponse{
+			FirstName: patientRequest.FirstName,
+			LastName:  patientRequest.LastName,
+			Age:       patientRequest.Age,
+		}
 		context.JSON(http.StatusCreated, patientResponse)
 	})
 	return router
