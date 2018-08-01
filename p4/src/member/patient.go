@@ -20,8 +20,8 @@ type patientsRequest struct {
 
 func PatientHandle(c *gin.Context) {
 	var patientRequest patientsRequest
-	err := c.ShouldBind(&patientRequest)
-	if err != nil {
+	if err := c.ShouldBind(&patientRequest); err == nil {
+		c.String(500, "error")
 		log.Println("bind error")
 	}
 
