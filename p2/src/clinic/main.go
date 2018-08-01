@@ -1,7 +1,7 @@
 package main
 
 import (
-	"handler"
+	"clinic/handler"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,5 +13,4 @@ func main() {
 		v1.POST("/", handler.CreatePatient)
 	}
 	router.Run()
-
 }
