@@ -1,0 +1,22 @@
+{
+	"info": {
+		"_postman_id": "c40bc51f-6c7e-4763-8d6b-0d7b16199b92",
+		"name": "patients",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "f4492ddb-4a1d-4322-b89b-61708f9d5c6a",
+			"name": "create new patient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
