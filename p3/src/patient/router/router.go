@@ -2,8 +2,8 @@ package router
 
 import (
 	"encoding/json"
-	"model"
 	"net/http"
+	"patient/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/echo"

@@ -2,9 +2,9 @@ package api
 
 import (
 	"encoding/json"
-	"model"
 	"net/http"
-	"service"
+	"patient/model"
+	"patient/service"
 )
 
 type Api struct {

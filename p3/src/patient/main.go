@@ -1,7 +1,7 @@
 package main
 
 import (
-	"router"
+	"patient/router"
 )
 
 const url = "mongodb://localhost:27017"

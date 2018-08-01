@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"model"
+	"patient/model"
 	"time"
 
 	mgo "gopkg.in/mgo.v2"

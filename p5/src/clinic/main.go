@@ -1,7 +1,7 @@
 package main
 
 import (
-	"handler"
+	"clinic/handler"
 
 	"github.com/gin-gonic/gin"
 )
