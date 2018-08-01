@@ -9,19 +9,19 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type IPatientService interface {
+type PatientService interface {
 	InsertPatient(patient model.Patient) (model.Patient, error)
 }
-type PatientService struct {
+type MongoPatientService struct {
 	DBSession *mgo.Session
 }
 
-func NewPatientService(session *mgo.Session) PatientService {
-	return PatientService{
+func NewMongoPatientService(session *mgo.Session) MongoPatientService {
+	return MongoPatientService{
 		DBSession: session,
 	}
 }
-func (service PatientService) InsertPatient(patient model.Patient) (model.Patient, error) {
+func (service MongoPatientService) InsertPatient(patient model.Patient) (model.Patient, error) {
 	var newPatient model.Patient
 	patient.PatientID, _ = service.GeneratePatientID()
 	err := service.DBSession.DB("hospital_somkiat").C("patients").Insert(patient)
@@ -33,7 +33,7 @@ func (service PatientService) InsertPatient(patient model.Patient) (model.Patien
 	return newPatient, err
 }
 
-func (service PatientService) GeneratePatientID() (string, error) {
+func (service MongoPatientService) GeneratePatientID() (string, error) {
 	var patientCount model.PatientCount
 	err := service.DBSession.DB("hospital_somkiat").C("patientsCount").Find(nil).One(&patientCount)
 	if err != nil && err.Error() == "not found" {
@@ -41,15 +41,15 @@ func (service PatientService) GeneratePatientID() (string, error) {
 		service.DBSession.DB("hospital_somkiat").C("patientsCount").Insert(&patientCount)
 	}
 	patientCount.Count++
-	return service.FormatPatientID(time.Now().Year(), patientCount.Count), nil
+	return FormatPatientID(time.Now().Year(), patientCount.Count), nil
 }
 
-func (service PatientService) UpdatePatientCount() {
+func (service MongoPatientService) UpdatePatientCount() {
 	var patientCount model.PatientCount
 	service.DBSession.DB("hospital_somkiat").C("patientsCount").Find(nil).One(&patientCount)
 	service.DBSession.DB("hospital_somkiat").C("patientsCount").UpdateId(patientCount.ID, bson.M{"$inc": bson.M{"count": 1}})
 }
 
-func (service PatientService) FormatPatientID(year, number int) string {
+func FormatPatientID(year, number int) string {
 	return fmt.Sprintf("%d-%04d", year, number)
 }

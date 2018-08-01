@@ -10,8 +10,7 @@ func Test_FormatPatientID_Input_Year_2018_PatientCount_1_Shoule_Be_2018_0001(t *
 	patientCount := 1
 	expectedPatientID := "2018-0001"
 
-	service := PatientService{}
-	actualPatientID := service.FormatPatientID(year, patientCount)
+	actualPatientID := FormatPatientID(year, patientCount)
 	if actualPatientID != expectedPatientID {
 		t.Errorf("expected %s but it got %s", expectedPatientID, actualPatientID)
 	}
