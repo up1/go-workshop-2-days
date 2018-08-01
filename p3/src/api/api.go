@@ -8,10 +8,10 @@ import (
 )
 
 type Api struct {
-	PatientService service.IPatientService
+	PatientService service.PatientService
 }
 
-func NewApi(patientService service.IPatientService) Api {
+func NewApi(patientService service.PatientService) Api {
 	return Api{
 		PatientService: patientService,
 	}

@@ -18,7 +18,7 @@ func main() {
 		return
 	}
 	defer DBSession.Close()
-	patientService := service.NewPatientService(DBSession)
+	patientService := service.NewMongoPatientService(DBSession)
 	api := apiLibrary.NewApi(&patientService)
 	http.HandleFunc("/v1/patients", api.CreatePatientHandler)
 
