@@ -3,10 +3,13 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 type Patient struct {
 	ID        string `json:"id,omitempty"`
+	PatientID string `json:"patientID,omitempty"`
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
 	Age       int    `json:"age"`
@@ -22,4 +25,8 @@ func main() {
 
 		json.NewEncoder(writer).Encode(patient)
 	})
+}
+
+func GeneratePatientID() string {
+	return strconv.Itoa(time.Now().Year())
 }
