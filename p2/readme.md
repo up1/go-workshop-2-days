@@ -12,3 +12,8 @@ Install go mysql driver library
 ```
 go get github.com/go-sql-driver/mysql
 ```
+
+Install go gin library
+```
+go get -u github.com/gin-gonic/gin
+```
