@@ -2,3 +2,6 @@ main.exe
 pkg
 github.com
 gopkg.in
+vendor
+bin
+*.out
