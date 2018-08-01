@@ -3,16 +3,16 @@ package model
 import "gopkg.in/mgo.v2/bson"
 
 type PatientRequest struct {
-	FirstName string `json:"firstname"bson:"firstname"`
-	LastName  string `json:"lastname"bson:"lastname"`
-	Age       int    `json:"age"bson:"age"`
+	FirstName string `json:"firstname"`
+	LastName  string `json:"lastname"`
+	Age       int    `json:"age"`
 }
 
 type PatientResponse struct {
-	PatientID string `json:"patientID,omitempty"bson:"patientID"`
-	FirstName string `json:"firstname"bson:"firstname"`
-	LastName  string `json:"lastname"bson:"lastname"`
-	Age       int    `json:"age"bson:"age"`
+	PatientID string `json:"patientID,omitempty"`
+	FirstName string `json:"firstname"`
+	LastName  string `json:"lastname"`
+	Age       int    `json:"age"`
 }
 
 type Patient struct {
