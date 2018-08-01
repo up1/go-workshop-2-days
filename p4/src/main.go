@@ -1,10 +1,19 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 )
 
 type patientsResponse struct {
+	ID        string `json:"patient_id"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Age       int    `json:"age"`
+}
+
+type patientsRequest struct {
 	ID        string `json:"patient_id"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
@@ -18,6 +27,12 @@ func main() {
 }
 
 func routerHandle(c *gin.Context) {
+	var patientRequest patientsRequest
+	err := c.ShouldBind(&patientRequest)
+	if err != nil {
+		log.Println("bind error")
+	}
+
 	patient := patientsResponse{
 		ID:        "2018-0001",
 		Firstname: "นารีนารถ",
