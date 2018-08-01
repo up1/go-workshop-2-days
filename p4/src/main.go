@@ -5,7 +5,7 @@ import (
 )
 
 type patientsResponse struct {
-	Id        string `json:"patient_id"`
+	ID        string `json:"patient_id"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
 	Age       int    `json:"age"`
@@ -19,7 +19,7 @@ func main() {
 
 func routerHandle(c *gin.Context) {
 	patient := patientsResponse{
-		Id:        "2018-0001",
+		ID:        "2018-0001",
 		Firstname: "นารีนารถ",
 		Lastname:  "เนรัญชร",
 		Age:       22,
